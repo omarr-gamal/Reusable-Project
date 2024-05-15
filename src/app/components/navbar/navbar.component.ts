@@ -42,26 +42,6 @@ export class NavbarComponent {
         icon: 'pi pi-home',
         routerLink: ['/dashboard'],
       },
-      {
-        label: 'Transactions',
-        icon: 'pi pi-money-bill',
-        routerLink: ['/transactions'],
-      },
-      {
-        label: 'Income',
-        icon: 'pi pi-building-columns',
-        routerLink: ['/incomes'],
-      },
-      {
-        label: 'Budgets',
-        icon: 'pi pi-briefcase',
-        routerLink: ['/budgets'],
-      },
-      {
-        label: 'Saving goals',
-        icon: 'fa-solid fa-piggy-bank',
-        routerLink: ['/saving-goals'],
-      },
     ];
 
     if (this.user) {
