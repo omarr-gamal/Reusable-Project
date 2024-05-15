@@ -62,6 +62,7 @@ import {
   DxDataGridModule,
 } from 'devextreme-angular/ui/data-grid';
 import { DxBulletModule, DxTemplateModule } from 'devextreme-angular';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -82,6 +83,7 @@ import { DxBulletModule, DxTemplateModule } from 'devextreme-angular';
     FormsModule,
     FontAwesomeModule,
     ReactiveFormsModule,
+    HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),

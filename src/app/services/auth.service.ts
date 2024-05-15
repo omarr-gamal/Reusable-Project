@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { HttpClient } from '@angular/common/http';
+
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 
-import { Observable, from, of } from 'rxjs';
+import { BehaviorSubject, Observable, from, of } from 'rxjs';
 import { switchMap, take, filter, map, catchError } from 'rxjs/operators';
 import { User, defaultUser } from '../models/user.model';
 import { getAuth, signInWithPopup, GoogleAuthProvider, getAdditionalUserInfo } from '@angular/fire/auth';
@@ -13,22 +15,53 @@ import { getAuth, signInWithPopup, GoogleAuthProvider, getAdditionalUserInfo } f
   providedIn: 'root'
 })
 export class AuthService {
+  private static backendUrl: string = 'https://localhost:44339';
+
   user$: Observable<User | null | undefined>;
 
   constructor(
+    private http: HttpClient,
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router
   ) { 
-    this.user$ = this.afAuth.authState.pipe(
-      switchMap((user) => {
-        if (user) {
-          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
-        } else {
-          return of(null);
-        }
+    this.user$ = of(this.loadUserFromLocalStorage());
+  }
+
+  login(email: string, password: string): Observable<User | null> {
+    const requestBody = { email, password };
+    return this.http.post<any>(`${AuthService.backendUrl}/api/login`, requestBody).pipe(
+      map(response => {
+        this.saveUserToLocalStorage(response.User);
+        return response.User
+      }),
+      catchError((err) => {
+        console.log(err)
+        return of(null);
       })
     );
+  }
+
+  signup(email: string, password: string, name: string, age: number, gender: string): Observable<User | null> {
+    const requestBody = { 
+      email,
+      password,
+      name,
+      age,
+      gender
+    };
+    return this.http.post<any>(`${AuthService.backendUrl}/api/register`, requestBody).pipe(
+      map(response => {
+        this.saveUserToLocalStorage(response.User);
+        return response.User
+      })
+    )
+  }
+
+  logout(): void {
+    this.deleteUserFromLocalStorage();
+    this.user$ = of(null);
+    this.router.navigate(['/login']);
   }
 
   async googleSignin(newUser: Boolean) {
@@ -40,7 +73,7 @@ export class AuthService {
         user = {
           ...defaultUser,
           uid: result.user.uid,
-          displayName: result.user.displayName,
+          name: result.user.displayName,
           email: result.user.email,
           photoURL: result.user.photoURL,
         }
@@ -96,5 +129,18 @@ export class AuthService {
   async signOut() {
     await this.afAuth.signOut();
     return this.router.navigate(['/']);
+  }
+
+  private saveUserToLocalStorage(user: User): void {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+  }
+
+  private loadUserFromLocalStorage(): User | null {
+    const userJson = localStorage.getItem('currentUser');
+    return userJson ? JSON.parse(userJson) : null;
+  }
+
+  private deleteUserFromLocalStorage(): void {
+    localStorage.removeItem('currentUser');
   }
 }
