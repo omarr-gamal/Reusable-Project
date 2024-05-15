@@ -17,7 +17,9 @@ export class SignupPageComponent {
   signupForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
-    displayName: ['', [Validators.required]]
+    gender : ['', [Validators.required]],
+    name: ['', [Validators.required]],
+    age: [, [Validators.required]],
   })
 
   constructor(
@@ -28,9 +30,9 @@ export class SignupPageComponent {
   ) { }
 
   signup() {
-    const { email, password, displayName } = this.signupForm.value;
+    const { email, password, name, age, gender } = this.signupForm.value;
 
-    this.auth.emailSignUp(email!, password!, displayName!).subscribe({
+    this.auth.emailSignUp(email!, password!, name!, age!, gender!).subscribe({
       next: (loggedIn: Boolean) => {
         if (loggedIn) {
           this.router.navigate(['/']); 

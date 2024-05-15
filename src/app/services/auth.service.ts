@@ -65,7 +65,7 @@ export class AuthService {
     )
   }
 
-  emailSignUp(email: string, password: string, displayName: string): Observable<any> {
+  emailSignUp(email: string, password: string, displayName: string, age: number, gender: string): Observable<any> {
     return from(this.afAuth.createUserWithEmailAndPassword(email, password)).pipe(
       switchMap((credential) => {
         if (credential && credential.user) {
