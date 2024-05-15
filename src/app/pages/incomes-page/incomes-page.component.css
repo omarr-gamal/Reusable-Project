@@ -1,0 +1,12 @@
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.col {
+  flex: 0 0 calc(33.33% - 120px);
+
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}

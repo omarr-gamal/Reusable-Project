@@ -1,0 +1,23 @@
+<p-menubar [model]="items" (click) = "activeMenu($event)">
+  <ng-template pTemplate="start">
+    <a href="/" style="text-decoration: none; color: inherit">
+      <div style="display: flex; align-items: center; margin-right: 10px">
+        <img src="assets/logo.png" alt="Budgy logo" />
+        <h4>Budgy</h4>
+      </div>
+    </a>
+  </ng-template>
+
+  <ng-template pTemplate="end">
+    <div *ngIf="!user">
+      <p-button label="Login" (onClick)="redirectToLoginPage()"></p-button>
+    </div>
+    <div *ngIf="user">
+      <p-menubar [model]="logOutItems" (click) = "activeMenu($event)">
+        <p-avatar image="{{user?.photoURL}}" shape="circle" />
+        <ng-template pTemplate="start">
+        </ng-template>
+      </p-menubar>
+    </div>
+  </ng-template>
+</p-menubar>

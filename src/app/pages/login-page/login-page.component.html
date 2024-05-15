@@ -1,0 +1,33 @@
+<p-card class="card flex justify-content-center">
+    <form class="form" [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="field" style="width: 100%;">
+            <p class="label">Email address</p>
+            <input style="width: 100%;" type="text" pInputText placeholder="Email address" formControlName="email" [class.invalid]="isInvalid('email')">
+        </div>
+        <div style="width: 100%;">
+            <small class="p-error block" *ngIf="isInvalid('email')">{{ getErrorMessage('email') }}</small>
+        </div>
+        <div class="field" style="width: 100%;">
+            <p class="label" for="password">Password</p>
+            <input style="width: 100%;" type="password" pInputText placeholder="Password" formControlName="password" [class.invalid]="isInvalid('password')">
+        </div>
+        <div style="width: 100%;">
+            <small class="p-error block" *ngIf="isInvalid('password')">{{ getErrorMessage('password') }}</small>
+        </div>
+        <button type="submit" pButton label="Login" [disabled]="loginForm.invalid" style="width: 100%; margin-top: 20px;"></button>
+    </form>
+    <p style="text-align: center;">or</p>
+    <button pButton severity="secondary" type="button" (click)="googleSignin()" style="margin-bottom: 20px; width: 100%;">Google Login</button>
+    <div class="sign-up-link">
+        <label class="label">Don't have an account? </label>
+        
+        <a routerLink="/signup">Sign up here</a>
+    </div>
+</p-card>
+
+<p-dialog header="Oh no!" [modal]="true" [(visible)]="loginError" [style]="{ width: '25rem' }">
+    <p>{{ loginErrorMessage }}</p>
+    <div class="flex justify-content-center">
+        <p-button label="Okay" (click)="loginError = false; loginForm.reset()" />
+    </div>
+</p-dialog>

@@ -1,0 +1,44 @@
+<app-page-wrapper>
+    <!-- Savings Balance Management -->
+    <p-panel header="Savings Balance Management">
+        <div class="balance-management">
+            <input type="number" pInputText [(ngModel)]="amountToAddOrRemove" placeholder="Enter amount" />
+            <p-button (click)="addToBalance()" label="Add to Balance" [disabled]="amountToAddOrRemove <= 0" />
+            <p-button (click)="removeFromBalance()" label="Remove from Balance"
+                [disabled]="amountToAddOrRemove <= 0 || amountToAddOrRemove > currentBalance" />
+        </div>
+        <p>Current Balance: {{ currentBalance | currency:'EGP':'symbol-narrow'}}</p>
+    </p-panel>
+
+    <!-- Add a New Saving Goal Panel -->
+    <p-panel header="Add a New Saving Goal">
+        <p-button (click)="showDialog()" label="+ New" />
+        <p-dialog header="New Saving Goal" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem'}">
+            <input type="number" pInputText [(ngModel)]="newSavingGoal.amount" placeholder="Target Amount" />
+            <p-slider [(ngModel)]="newSavingGoal.amount" [min]="1" [max]="100000" />
+            <input type="text" pInputText [(ngModel)]="newSavingGoal.name" placeholder="Goal Name" />
+            <input type="text" pInputText [(ngModel)]="newSavingGoal.description" placeholder="Description" />
+            <p *ngIf="!isFormValid()" class="error-message">Please enter a name and target amount above 0.</p>
+            <br />
+            <div class="add">
+                <p-button label="Add" (click)="addSavingGoal()" [disabled]="!isFormValid()" />
+            </div>
+        </p-dialog>
+    </p-panel>
+
+    <div>
+        <p-card *ngFor="let goal of savingGoals" [header]="goal.name">
+            <div class="deletebtn" (click)="deleteSavingGoal(goal.id!)">
+                <p-button icon="pi pi-times" [rounded]="true" severity="danger" class="delete"></p-button>
+            </div>
+            <p-accordion>
+                <p-accordionTab header="Description"
+                    [disabled]="!goal.description || goal.description.trim().length === 0">
+                    <p>{{ goal.description }}</p>
+                </p-accordionTab>
+            </p-accordion>
+            <p>Target Amount: {{ goal.amount | currency:'EGP':'symbol-narrow' }}</p>
+            <p-progressBar [value]="calculateProgress(goal)"></p-progressBar>
+        </p-card>
+    </div>
+</app-page-wrapper>

@@ -1,0 +1,50 @@
+div {
+    display: flex;
+    justify-content: space-between;
+}
+
+p-card {
+    width: 15vw;
+    text-align: center;
+}
+
+::ng-deep .p-card-title {
+    font-size: medium;
+}
+
+
+p {
+    font-size: 1rem;
+}
+
+.income {
+    color: green;
+}
+
+.expenses {
+    color: red;
+}
+
+
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    p-card {
+        width: 80vw;
+        margin: 10px 0px;
+    }
+
+    div {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    p-card {
+        width: 150px;
+        margin: 0px 10px;
+    }
+}
+
+@media (min-width: 1025px) {}

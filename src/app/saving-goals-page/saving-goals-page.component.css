@@ -1,0 +1,43 @@
+div {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    justify-content: space-between;
+
+}
+
+input {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+p-card {
+    width: 46vw;
+    text-align: center;
+}
+
+p-panel {
+    margin: 20px;
+}
+
+.ererror-message {
+    color: red;
+}
+
+.delete {
+    font-size: smaller;
+    padding: 0.25em 0.5em;
+    margin-bottom: 30px;
+
+}
+
+.deletebtn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.add {
+    display: flex;
+    justify-content: flex-end;
+}

@@ -1,0 +1,46 @@
+/* Custom CSS classes */
+.dialog-content {
+  display: block;
+  margin-bottom: 5px;
+}
+.form-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 5px;
+}
+
+.dialog-content span {
+  display: block;
+  margin-bottom: 3px;
+  color: #6c757d;
+  font-weight: 600;
+}
+
+.dialog-content .form-item {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 30px;
+}
+
+/* .dialog-content .form-item label {
+  width: 6rem;
+  font-weight: 600;
+} */
+
+.dialog-content .form-item input {
+  flex: 1;
+}
+
+.dialog-content .actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 2px;
+}
+.add-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}

@@ -1,0 +1,57 @@
+<p-dialog header="Add Income Source" [(visible)]="display" [modal]="true" [style]="{ width: '40rem' }">
+  <ng-template pTemplate="footer">
+    <!-- <div *ngIf="incomeForm.get('endDate')?.invalid">
+      <p>End date must be after start date.</p>
+    </div> -->
+    <p-button label="Cancel" severity="secondary" (click)="display = false"></p-button>
+    <p-button label="Save" [disabled]="incomeForm.invalid" type="submit" (click)="saveIncome()"></p-button>
+  </ng-template>
+  <div class="dialog-content">
+    <span>Enter the details below to add a new income source.</span>
+    <form [formGroup]="incomeForm" (ngSubmit)="saveIncome()">
+      <div class="form-item">
+        <p-floatLabel>
+          <input pInputText id="title" autocomplete="off" [style]="{ width: '37rem' }" formControlName="title" />
+          <label for="title">Title</label>
+        </p-floatLabel>
+      </div>
+      <div class="form-item">
+        <p-floatLabel>
+          <textarea rows="3" cols="100" pInputTextarea [style]="{ width: '100%', 'min-height': '100px' }"
+            autoResize="true" formControlName="description"></textarea>
+          <label for="description">Description</label>
+        </p-floatLabel>
+      </div>
+      <div class="form-group">
+        <div class="form-item">
+          <p-floatLabel>
+            <p-inputNumber inputId="amount" mode="currency" currency="EGP" locale="en-US" maxFractionDigits="0"
+              formControlName="amount" />
+            <label for="amount">Income Per Month</label>
+          </p-floatLabel>
+        </div>
+        <div class="form-item">
+          <p-dropdown [options]="incomeCategories" placeholder="Select Income Category" appendTo="body"
+            formControlName="incomeCategory"></p-dropdown>
+        </div>
+        <div class="form-item">
+          <p-floatLabel>
+            <p-calendar [iconDisplay]="'input'" [showIcon]="true" inputId="startDate" appendTo="body"
+              formControlName="startDate" dateFormat="mm/dd/yy" dataType="string"></p-calendar>
+            <label for="startDate">Start Date</label>
+          </p-floatLabel>
+        </div>
+        <div class="form-item">
+          <p-floatLabel>
+            <p-calendar [iconDisplay]="'input'" [showIcon]="true" inputId="endDate" appendTo="body"
+              formControlName="endDate" dateFormat="mm/dd/yy" dataType="string"></p-calendar>
+            <label for="endDate">End Date</label>
+          </p-floatLabel>
+        </div>
+      </div>
+    </form>
+  </div>
+</p-dialog>
+<div class="add-button">
+  <p-button icon="pi pi-plus" rounded="true" label="Add Income Source" (click)="showDialog()"></p-button>
+</div>

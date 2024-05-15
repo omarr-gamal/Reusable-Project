@@ -1,0 +1,102 @@
+<p-panel header="Income Report">
+  <dx-data-grid
+    [dataSource]="monthlyIncomes"
+    id="gridContainer"
+    [remoteOperations]="false"
+    [allowColumnReordering]="true"
+    [rowAlternationEnabled]="true"
+    [showBorders]="true"
+    [width]="'100%'"
+    [(visible)]="display"
+  >
+    <dxi-column
+      dataField="amount"
+      caption="Income Amount"
+      dataType="number"
+      alignment="right"
+      [sortOrder]="'desc'"
+      cellTemplate="cellTemplate"
+    >
+      <dxo-header-filter [visible]="true"></dxo-header-filter>
+      <div *dxTemplate="let d of 'cellTemplate'">
+        <div [style.color]="d.value > 10000 ? 'red' : 'blue'">
+          {{ d.value | currency }}
+        </div>
+      </div>
+    </dxi-column>
+    <dxi-column
+      caption="Title"
+      dataField="title"
+      dataType="string"
+      alignment="left"
+    >
+    </dxi-column>
+    <dxi-column
+      dataField="incomeCategory"
+      caption="Income Category"
+      dataType="string"
+    >
+      <dxo-header-filter [visible]="true"></dxo-header-filter>
+    </dxi-column>
+    <dxi-column dataField="startDate" dataType="date">
+      <dxo-header-filter [visible]="true"></dxo-header-filter>
+    </dxi-column>
+    <dxi-column dataField="endDate" dataType="date">
+      <dxo-header-filter [visible]="true"></dxo-header-filter>
+    </dxi-column>
+
+    <dxi-column
+      caption="Percentage of Total Income"
+      dataField="amount"
+      cellTemplate="percentageCellTemplate"
+      dataType="number"
+      format="percent"
+      alignment="right"
+      [allowGrouping]="false"
+      cssClass="bullet"
+    ></dxi-column>
+    <div *dxTemplate="let d of 'percentageCellTemplate'">
+      <div class="chart-cell">
+        <dx-bullet
+          [showTarget]="false"
+          [showZeroLevel]="true"
+          [startScaleValue]="0"
+          [endScaleValue]="100"
+          [value]="(d.value / getTotalIncome()) * 100"
+        >
+          <dxo-size [width]="150" [height]="35"></dxo-size>
+          <dxo-tooltip
+            [enabled]="true"
+            [paddingTopBottom]="2"
+            [customizeTooltip]="customizeTooltip"
+          >
+            <dxo-font [size]="18"></dxo-font>
+          </dxo-tooltip>
+          <dxo-margin [top]="5" [bottom]="0" [left]="5"></dxo-margin>
+        </dx-bullet>
+      </div>
+    </div>
+  </dx-data-grid>
+
+  <div class="show-button">
+    <p-button
+      *ngIf="!display"
+      icon="pi pi-eye"
+      rounded="true"
+      label="Show Income Report"
+      (click)="showIncomeReport()"
+      [raised]="true"
+      severity="help"
+    ></p-button>
+  </div>
+  <div class="show-button">
+    <p-button
+      *ngIf="display"
+      icon="pi pi-eye-slash"
+      rounded="true"
+      label="Hide Income Report"
+      (click)="hideIncomeReport()"
+      severity="warning"
+    ></p-button>
+  </div>
+</p-panel>

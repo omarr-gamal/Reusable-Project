@@ -1,0 +1,17 @@
+.chart-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+app-custom-panel {
+    flex: 1 1 50%;
+    margin: 10px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    app-custom-panel {
+        flex: 1 1 100%;
+    }
+}

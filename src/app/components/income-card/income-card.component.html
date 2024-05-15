@@ -1,0 +1,39 @@
+<p-card [header]="monthlyIncome.title" [subheader]="monthlyIncome.incomeCategory" [style]="{ width: '420px' }"
+  class="my-card">
+  <p class="description" *ngIf="!editMode">{{ monthlyIncome.description }}</p>
+  <input type="text" class="description" *ngIf="editMode" [(ngModel)]="monthlyIncome.description" />
+  <p-divider />
+  <div class="income-display">
+    <div>Monthly Income:</div>
+    <div class="bold-text" *ngIf="!editMode">
+      {{ monthlyIncome.amount | currency:'EGP':'symbol-narrow'}}/Month
+    </div>
+    <input inputId="amount" mode="currency" currency="EGP" class="bold-text" maxFractionDigits="0" *ngIf="editMode"
+      [(ngModel)]="monthlyIncome.amount" />
+  </div>
+  <div class="income-display">
+    <div>Start Date:</div>
+    <div *ngIf="!editMode">
+      {{ monthlyIncome.startDate | date : "dd/MM/yyyy" }}
+    </div>
+    <input type="date" *ngIf="editMode" [(ngModel)]="monthlyIncome.startDate" />
+  </div>
+  <div class="income-display">
+    <div>End Date:</div>
+    <div *ngIf="!editMode">
+      {{ monthlyIncome.endDate | date : "dd/MM/yyyy" }}
+    </div>
+    <input type="date" *ngIf="editMode" [(ngModel)]="monthlyIncome.endDate" />
+  </div>
+  <ng-template pTemplate="footer">
+    <p-divider />
+    <div class="card-buttons">
+      <p-button *ngIf="!editMode" icon="pi pi-pencil" (click)="toggleEditMode()" severity="secondary"></p-button>
+      <p-button *ngIf="editMode" icon="pi pi-check" (click)="saveChanges()" severity="success"></p-button>
+      <p-button *ngIf="editMode" icon="pi pi-times" (click)="cancelEdit()" severity="secondary"
+        label="Cancel Editing"></p-button>
+      <p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>
+      <p-button *ngIf="!editMode" icon="pi pi-times" severity="danger" (click)="confirmDeletion()"></p-button>
+    </div>
+  </ng-template>
+</p-card>

@@ -1,0 +1,13 @@
+.dynamic-panel {
+    background-color: white;
+    border-radius: 5px;
+}
+
+.panel-header {
+    padding: 20px 30px;
+    font-weight: bold;
+}
+
+.panel-body {
+    padding: 15px;
+}

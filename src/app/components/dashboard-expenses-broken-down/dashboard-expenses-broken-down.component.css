@@ -1,0 +1,18 @@
+.expenses-break-down {
+    margin: 20px;
+}
+
+.expenses-break-down-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.color-circle {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: 5px;
+}

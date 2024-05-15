@@ -1,0 +1,365 @@
+<div style="padding: 20px">
+  <h1 class="m0">Expenses</h1>
+
+  <p-toolbar>
+    <ng-template pTemplate="left">
+      <p-button
+        pRipple
+        severity="success"
+        label="New"
+        icon="pi pi-plus"
+        class="new-button"
+        (click)="openAddExpenseModal()"
+      />
+
+      <p-button
+        pRipple
+        severity="danger"
+        label="Delete Selected"
+        icon="pi pi-trash"
+        (click)="deleteSelectedTransactions()"
+        [disabled]="selectedTransactions.length === 0"
+      />
+    </ng-template>
+  </p-toolbar>
+  <p-table
+    #dt
+    [value]="transactions"
+    [rows]="10"
+    [paginator]="true"
+    [tableStyle]="{ 'min-width': '75rem' }"
+    [rowHover]="true"
+    dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [showCurrentPageReport]="true"
+    [globalFilterFields]="['name', 'date', 'category', 'amount', 'recurring']"
+    [(selection)]="selectedTransactions"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between search-cont">
+        <h5 class="m-0">Manage Expenses</h5>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="filterGlobal($event)"
+            placeholder="Search..."
+          />
+        </span>
+        <p-calendar
+          [showIcon]="true"
+          [showOnFocus]="false"
+          inputId="buttondisplay"
+          (onSelect)="filterDate($event)"
+          view="month"
+          dateFormat="mm/yy"
+          [(ngModel)]="selectedDate"
+          [showClear]="true"
+          (onClear)="onClearDate()"
+        ></p-calendar>
+        <p-button
+          pRipple
+          severity="success"
+          label="View Monthly Expenses"
+          class="mr-2"
+          (onClick)="openMonthlyExpensesModal()"
+        />
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 4rem">
+          <p-tableHeaderCheckbox />
+        </th>
+        <th pSortableColumn="name" style="min-width: 15rem">
+          Name <p-sortIcon field="name" />
+        </th>
+
+        <th pSortableColumn="date">Date <p-sortIcon field="date" /></th>
+        <th pSortableColumn="category" style="min-width: 10rem">
+          Category <p-sortIcon field="category" />
+        </th>
+        <th pSortableColumn="amount">Amount <p-sortIcon field="amount" /></th>
+        <th pSortableColumn="recurring">
+          Reccuring <p-sortIcon field="recurring" />
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-transaction>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="transaction" />
+        </td>
+        <td>
+          {{ transaction.name }}
+        </td>
+        <td>
+          {{ transaction.date.toDate().toLocaleDateString("en-GB") }}
+        </td>
+        <td>
+          {{ transaction.category }}
+        </td>
+        <td>
+          {{ transaction.amount | currency : "EGP" : "symbol-narrow" }}
+        </td>
+
+        <td>
+          <p-chip
+            [label]="transaction.isRecurring ? 'Recurring' : 'One-time'"
+          ></p-chip>
+        </td>
+
+        <td>
+          <p-button
+            pRipple
+            icon="pi pi-pencil"
+            [rounded]="true"
+            [outlined]="true"
+            severity="success"
+            (click)="editTransaction(transaction)"
+          />
+          <p-button
+            pRipple
+            icon="pi pi-trash"
+            severity="danger"
+            [rounded]="true"
+            [outlined]="true"
+            (click)="deleteTransaction(transaction)"
+          />
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        In total there are
+        {{ transactions ? transactions.length : 0 }} expenses.
+      </div>
+    </ng-template>
+  </p-table>
+  <p-dialog
+    header="Add New Expense"
+    [(visible)]="showAddExpenseModal"
+    [style]="{ width: '50vw' }"
+  >
+    <form class="form-layout">
+      <div class="form-row">
+        <label class="form-label" for="expenseName">Name:</label>
+        <input
+          pInputText
+          id="expenseName"
+          [(ngModel)]="tempTransaction.name"
+          name="expenseName"
+          class="form-input"
+        />
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="expenseDate">Date:</label>
+        <p-calendar
+          showAnim="slideDown"
+          class="form-input"
+          [showIcon]="true"
+          [showOnFocus]="false"
+          inputId="buttondisplay"
+          [(ngModel)]="tempTransaction.date"
+          name="expenseDate"
+          [disabled]="!!tempTransaction.isRecurring"
+        ></p-calendar>
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="expenseCategory">Category:</label>
+        <p-dropdown
+          class="form-input"
+          [options]="expenseCategories"
+          [(ngModel)]="tempTransaction.category"
+          [showClear]="true"
+          placeholder="Select a Category"
+          name="expenseCategory"
+          optionLabel="name"
+          optionValue="id"
+        ></p-dropdown>
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="expenseBudget">Budget:</label>
+        <p-dropdown
+          class="form-input"
+          [options]="expenseBudgets"
+          [(ngModel)]="tempTransaction.budgetName"
+          [showClear]="true"
+          placeholder="Select a Budget"
+          name="expenseBudget"
+          optionLabel="name"
+          optionValue="id"
+        >
+        </p-dropdown>
+      </div>
+
+      <div class="form-row">
+        <label class="form-label" for="expenseAmount">Amount:</label>
+        <input
+          type="number"
+          pInputText
+          id="expenseAmount"
+          [(ngModel)]="tempTransaction.amount"
+          name="expenseAmount"
+          class="form-input"
+        />
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="expenseRecurring"
+          >Is this a monthly recurring event?</label
+        >
+        <p-checkbox
+          binary="true"
+          id="expenseRecurring"
+          [(ngModel)]="tempTransaction.isRecurring"
+          name="expenseRecurring"
+          class="form-input"
+        ></p-checkbox>
+      </div>
+      <div
+        *ngIf="!allFilled"
+        class="p-text-bold p-text-uppercase p-text-center p-error"
+      >
+        Please fill all the fields.
+      </div>
+
+      <div class="form-submit-cont">
+        <p-button label="Save" (click)="addNewTransaction()"></p-button>
+        <p-button
+          label="Cancel"
+          (click)="showAddExpenseModal = false"
+        ></p-button>
+      </div>
+    </form>
+  </p-dialog>
+  <p-dialog
+    header="Edit Expense"
+    [(visible)]="showEditExpenseModal"
+    [style]="{ width: '50vw' }"
+  >
+    <form class="form-layout">
+      <div class="form-row">
+        <label class="form-label" for="expenseName">Name:</label>
+        <input
+          pInputText
+          id="expenseName"
+          [(ngModel)]="tempTransaction.name"
+          name="expenseName"
+          class="form-input"
+        />
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="expenseDate">Date:</label>
+        <p-calendar
+          showAnim="slideDown"
+          class="form-input"
+          [showIcon]="true"
+          [showOnFocus]="false"
+          inputId="buttondisplay"
+          [(ngModel)]="tempTransaction.date"
+          name="expenseDate"
+          [disabled]="!!tempTransaction.isRecurring"
+          [placeholder]="formattedDate"
+        ></p-calendar>
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="expenseCategory">Category:</label>
+        <p-dropdown
+          class="form-input"
+          [options]="expenseCategories"
+          [(ngModel)]="tempTransaction.category"
+          [showClear]="true"
+          [placeholder]="tempTransaction.category"
+          name="expenseCategory"
+          optionLabel="name"
+        ></p-dropdown>
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="expenseBudget">Budget:</label>
+        <p-dropdown
+          class="form-input"
+          [options]="expenseBudgets"
+          [(ngModel)]="tempTransaction.budgetName"
+          [showClear]="true"
+          placeholder="Select a Budget"
+          name="expenseBudget"
+          optionLabel="name"
+          optionValue="id"
+        >
+        </p-dropdown>
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="expenseAmount">Amount:</label>
+        <input
+          type="number"
+          pInputText
+          id="expenseAmount"
+          [(ngModel)]="tempTransaction.amount"
+          name="expenseAmount"
+          class="form-input"
+        />
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="expenseRecurring">Recurring:</label>
+        <p-checkbox
+          binary="true"
+          id="expenseRecurring"
+          [(ngModel)]="tempTransaction.isRecurring"
+          name="expenseRecurring"
+          class="form-input"
+        ></p-checkbox>
+      </div>
+      <div
+        *ngIf="!allFilled"
+        class="p-text-bold p-text-uppercase p-text-center p-error"
+      >
+        Please fill all the fields.
+      </div>
+
+      <div class="form-submit-cont">
+        <p-button label="Save" (click)="saveExpense()"></p-button>
+        <p-button
+          label="Cancel"
+          (click)="showEditExpenseModal = false"
+        ></p-button>
+      </div>
+    </form>
+  </p-dialog>
+  <p-dialog
+    header="Monthly Expenses"
+    [(visible)]="showMonthlyExpensesModal"
+    [style]="{ width: '70vw' }"
+  >
+    <p-button
+      pRipple
+      severity="success"
+      label="New"
+      icon="pi pi-plus"
+      class="mr-2"
+      (click)="createRecurringExpense()"
+    />
+    <div style="display: flex; gap: 20px">
+      <ng-container *ngFor="let expense of monthlyExpenses">
+        <p-card
+          [header]="expense.name"
+          [subheader]="expense.description"
+          [style]="{ width: '200px', height: '250px' }"
+        >
+          <span>{{ expense.amount | currency }}</span>
+          <ng-template pTemplate="footer">
+            <div class="flex">
+              <p-button
+                label="Delete"
+                severity="danger"
+                class="w-full"
+                (onClick)="deleteExpense(expense)"
+                styleClass="w-full"
+              ></p-button>
+            </div>
+          </ng-template>
+        </p-card>
+      </ng-container>
+    </div>
+  </p-dialog>
+</div>
