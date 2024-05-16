@@ -41,11 +41,14 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<User | null> {
+    console.log("login called");
     const requestBody = { email, password };
     return this.http
       .post<any>(`${AuthService.backendUrl}/api/login`, requestBody)
       .pipe(
         map((response) => {
+          console.log("aa")
+          console.log(response);
           this.saveUserToLocalStorage(response.User);
           this.userSubject.next(response.User);
           return response.User;
@@ -90,6 +93,8 @@ export class AuthService {
   }
 
   refreshUserState(user: User) {
+    console.log("refreshUserState called");
+    console.log(user);
     this.userSubject.next(user);
     this.saveUserToLocalStorage(user);
   }

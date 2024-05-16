@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 
 import { User } from '../models/user.model';
-import { Observable, catchError, map, of, switchMap } from 'rxjs';
+import { Observable, catchError, first, map, of, switchMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -13,6 +13,7 @@ export class UserDataService {
 
   updateUser(data: any): Observable<boolean> {
     return this.auth.user$.pipe(
+      first(),
       switchMap((user) => {
         if (user) {
           const updatedUser = { ...user, ...data };
