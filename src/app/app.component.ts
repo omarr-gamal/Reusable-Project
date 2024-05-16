@@ -13,13 +13,13 @@ import { AuthService } from './services/auth.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'Budgy';
+  title = 'Wimdy';
 
   // Icons
   faTrashAlt = faTrashAlt
   faPen = faPen
   faCheck = faCheck
-  faXmark = faXmark 
+  faXmark = faXmark
 
   constructor(
     public auth: AuthService

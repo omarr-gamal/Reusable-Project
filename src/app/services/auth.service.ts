@@ -25,7 +25,7 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router
-  ) { 
+  ) {
     this.userSubject = new BehaviorSubject<User | null | undefined>(this.loadUserFromLocalStorage());
     this.user$ = this.userSubject.asObservable();
   }
@@ -46,7 +46,7 @@ export class AuthService {
   }
 
   signup(email: string, password: string, name: string, age: number, gender: string): Observable<User | null> {
-    const requestBody = { 
+    const requestBody = {
       email,
       password,
       name,
@@ -94,7 +94,7 @@ export class AuthService {
         return of(true);
       }
     }).catch((error) => {
-        console.log(error)
+      console.log(error)
     });
   }
 
@@ -120,7 +120,7 @@ export class AuthService {
             displayName: displayName,
             email: email,
           }
-          
+
           return from(this.updateUserData(user as User));
         } else {
           return of(null);
@@ -128,7 +128,7 @@ export class AuthService {
       }),
     )
   }
-  
+
   private updateUserData(user: User): Observable<Boolean> {
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.id}`);
 
