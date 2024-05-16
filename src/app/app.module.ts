@@ -62,7 +62,10 @@ import { SliderModule } from 'primeng/slider';
 
 import { DxDataGridModule } from 'devextreme-angular/ui/data-grid';
 import { DxBulletModule, DxTemplateModule } from 'devextreme-angular';
+
+import { HttpClientModule } from '@angular/common/http';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+
 
 @NgModule({
   declarations: [
@@ -84,6 +87,7 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
     FormsModule,
     FontAwesomeModule,
     ReactiveFormsModule,
+    HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),

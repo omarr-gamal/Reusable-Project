@@ -1,9 +1,10 @@
 <p-card class="card flex justify-content-center">
+    <h1 style="text-align: center;" class="title">Sign Up</h1>
     <form class="form" [formGroup]="signupForm" (ngSubmit)="signup()">
         <div class="field" style="width: 100%;"> 
             <p class="label" style="width: 100%;">Name</p>
-            <input style="width: 100%;" type="text" pInputText placeholder="name" formControlName="displayName" [class.invalid]="isInvalid('displayName')">
-            <small class="p-error block" *ngIf="isInvalid('displayName')">{{ getErrorMessage('displayName') }}</small>
+            <input style="width: 100%;" type="text" pInputText placeholder="name" formControlName="name" [class.invalid]="isInvalid('name')">
+            <small class="p-error block" *ngIf="isInvalid('name')">{{ getErrorMessage('name') }}</small>
         </div>
         <div class="field" style="width: 100%;">
             <p class="label" style="width: 100%;">Email address</p>
@@ -15,10 +16,20 @@
             <input style="width: 100%;" type="password" pInputText placeholder="password" formControlName="password" [class.invalid]="isInvalid('password')">
             <small style="width: 100%;" class="p-error block" *ngIf="isInvalid('password')">{{ getErrorMessage('password') }}</small>
         </div>
-        <button style="width: 100%; margin-top: 20px;" type="submit" pButton label="Sign up" [disabled]="signupForm.invalid" style="margin-bottom: 20px;"></button>
+        <div class="field" style="width: 100%;">
+            <p for="age" class="label" style="width: 100%;">Age</p>
+            <input style="width: 100%;" type="number" pInputText placeholder="age" formControlName="age" [class.invalid]="isInvalid('age')">
+            <small style="width: 100%;" class="p-error block" *ngIf="isInvalid('age')">{{ getErrorMessage('age') }}</small>
+        </div>
+        <div class="field" style="width: 100%;">
+            <p for="gender" class="label" style="width: 100%;">Gender</p>
+            <input style="width: 100%;" type="text" pInputText placeholder="gender" formControlName="gender" [class.invalid]="isInvalid('gender')">
+            <small style="width: 100%;" class="p-error block" *ngIf="isInvalid('gender')">{{ getErrorMessage('gender') }}</small>
+        </div>
+        <button id="signup" style="width: 100%; margin-top: 20px;" type="submit" pButton label="Sign up" [disabled]="signupForm.invalid"></button>
     </form>
     <p style="text-align: center;">or</p>
-    <button pButton severity="secondary" type="button" (click)="googleSignup()" style="display: flex; margin-bottom: 20px; width: 100%;">Google Sign Up</button>
+    <button style="display: flex; margin-bottom: 20px; width: 100%;" pButton severity="secondary" type="button" (click)="googleSignup()">Google Sign Up</button>
     <div class="login-link">
         <label class="label">Already have an account? </label>
         
