@@ -1,5 +1,5 @@
 export interface User {
-    uid: string;
+    id: string;
     email: string;
     name: string;
     age: number;
@@ -20,7 +20,7 @@ export interface User {
 }
 
 export const defaultUser: User = {
-    uid: '',
+    id: '',
     email: '',
     name: '',
     photoURL: 'https://static.vecteezy.com/system/resources/previews/009/292/244/original/default-avatar-icon-of-social-media-user-vector.jpg', 

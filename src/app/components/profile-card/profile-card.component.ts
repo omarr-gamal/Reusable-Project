@@ -19,7 +19,7 @@ export class ProfileCardComponent {
   ) {
     this.user = {
       ...defaultUser,
-      uid: '',
+      id: '',
       email: 'user@example.com',
       name: 'User Name',
       photoURL:

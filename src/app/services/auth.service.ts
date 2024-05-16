@@ -122,7 +122,7 @@ export class AuthService {
   }
   
   private updateUserData(user: User): Observable<Boolean> {
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.id}`);
 
     return from(userRef.set(user, { merge: true })).pipe(
       map(() => true), // If the promise resolves, emit true
