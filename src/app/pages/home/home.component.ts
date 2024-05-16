@@ -69,6 +69,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private checkThresholds(): void {
     if (this.weatherData && this.user) {
       const { temperature_thres, humidity_thres, pm25_thres, pm10_thres, co_thres, pressure_mb_thres, visibility_km_thres, wind_kph_thres, uv_thres } = this.user.thresholds;
+      const thresholdsNotSet = temperature_thres === 0 && humidity_thres === 0 && pm25_thres === 0 && pm10_thres === 0 && co_thres === 0 && pressure_mb_thres === 0 && visibility_km_thres === 0 && wind_kph_thres === 0 && uv_thres === 0;
       const current = this.weatherData.current;
 
       let exceededConditions: string[] = [];
@@ -101,7 +102,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         exceededConditions.push(`UV Index: ${current.uv} (Threshold: ${uv_thres})`);
       }
 
-      if (exceededConditions.length > 0) {
+      if (exceededConditions.length > 0 && !thresholdsNotSet) {
         alert(`Warning: The following conditions have exceeded the set thresholds:\n\n${exceededConditions.join('\n')}`);
       }
     }
