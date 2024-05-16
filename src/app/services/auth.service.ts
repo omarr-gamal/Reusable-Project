@@ -15,7 +15,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider, getAdditionalUserInfo } f
   providedIn: 'root'
 })
 export class AuthService {
-  private static backendUrl: string = 'https://localhost:44339';
+  public static backendUrl: string = 'https://localhost:44339';
   private userSubject: BehaviorSubject<User | null | undefined>;
 
   user$: Observable<User | null | undefined>;
@@ -66,6 +66,14 @@ export class AuthService {
     this.deleteUserFromLocalStorage();
     this.userSubject.next(null);
     this.router.navigate(['/login']);
+  }
+
+  refreshUserState() {
+    this.user$.subscribe((user: any) => {
+      if (user) {
+        this.login(user.email!, user.password!).subscribe();
+      }
+    });
   }
 
   async googleSignin(newUser: Boolean) {
