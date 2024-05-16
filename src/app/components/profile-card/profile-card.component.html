@@ -1,16 +1,8 @@
-<p-card
-  header="My Profile"
-  subheader="View and Edit Your Profile Information "
-  [style]="{ width: '420px' }"
-  class="my-card"
->
+<p-card header="My Profile" subheader="View and Edit Your Profile Information " [style]="{ width: '420px' }"
+  class="my-card">
   <div class="img-container">
-    <p-avatar
-      [image]="user.photoURL"
-      styleClass="mr-2"
-      shape="circle"
-      [style]="{ width: '200px', height: '200px', alignSelf: 'center' }"
-    ></p-avatar>
+    <p-avatar [image]="user.photoURL ?? 'assets/logo.png'" styleClass="mr-2" shape="circle"
+      [style]="{ width: '200px', height: '200px', alignSelf: 'center' }"></p-avatar>
   </div>
   <p-divider></p-divider>
   <div class="info-display">
@@ -18,12 +10,7 @@
     <div class="bold-text" *ngIf="!editMode">
       {{ user.name }}
     </div>
-    <input
-      inputId="name"
-      class="bold-text"
-      *ngIf="editMode"
-      [(ngModel)]="user.name"
-    />
+    <input inputId="name" class="bold-text" *ngIf="editMode" [(ngModel)]="user.name" />
   </div>
   <div class="info-display">
     <div>Email</div>
@@ -56,156 +43,105 @@
     <div>Temperature</div>
     <div *ngIf="!editMode">
       {{
-        user.thresholds.temperature_thres !== 0
-          ? user.thresholds.temperature_thres + " °C"
-          : "N/A"
+      user.thresholds.temperature_thres !== 0
+      ? user.thresholds.temperature_thres + " °C"
+      : "N/A"
       }}
     </div>
-    <input
-      type="number"
-      *ngIf="editMode"
-      [(ngModel)]="user.thresholds.temperature_thres"
-    />
+    <input type="number" *ngIf="editMode" [(ngModel)]="user.thresholds.temperature_thres" />
   </div>
   <div class="info-display">
     <div>Particulate Matter (PM2.5)</div>
     <div *ngIf="!editMode">
       {{
-        user.thresholds.pm25_thres !== 0
-          ? user.thresholds.pm25_thres + " µg/m³"
-          : "N/A"
+      user.thresholds.pm25_thres !== 0
+      ? user.thresholds.pm25_thres + " µg/m³"
+      : "N/A"
       }}
     </div>
-    <input
-      type="number"
-      *ngIf="editMode"
-      [(ngModel)]="user.thresholds.pm25_thres"
-    />
+    <input type="number" *ngIf="editMode" [(ngModel)]="user.thresholds.pm25_thres" />
   </div>
   <div class="info-display">
     <div>Particulate Matter (PM10)</div>
     <div *ngIf="!editMode">
       {{
-        user.thresholds.pm10_thres !== 0
-          ? user.thresholds.pm10_thres + " µg/m³"
-          : "N/A"
+      user.thresholds.pm10_thres !== 0
+      ? user.thresholds.pm10_thres + " µg/m³"
+      : "N/A"
       }}
     </div>
-    <input
-      type="number"
-      *ngIf="editMode"
-      [(ngModel)]="user.thresholds.pm10_thres"
-    />
+    <input type="number" *ngIf="editMode" [(ngModel)]="user.thresholds.pm10_thres" />
   </div>
   <div class="info-display">
     <div>Humidity</div>
     <div *ngIf="!editMode">
       {{
-        user.thresholds.humidity_thres !== 0
-          ? user.thresholds.humidity_thres + " %"
-          : "N/A"
+      user.thresholds.humidity_thres !== 0
+      ? user.thresholds.humidity_thres + " %"
+      : "N/A"
       }}
     </div>
-    <input
-      type="number"
-      *ngIf="editMode"
-      [(ngModel)]="user.thresholds.humidity_thres"
-    />
+    <input type="number" *ngIf="editMode" [(ngModel)]="user.thresholds.humidity_thres" />
   </div>
   <div class="info-display">
     <div>Carbon Monoxide (CO)</div>
     <div *ngIf="!editMode">
       {{
-        user.thresholds.co_thres !== 0
-          ? user.thresholds.co_thres + " ppm"
-          : "N/A"
+      user.thresholds.co_thres !== 0
+      ? user.thresholds.co_thres + " ppm"
+      : "N/A"
       }}
     </div>
-    <input
-      type="number"
-      *ngIf="editMode"
-      [(ngModel)]="user.thresholds.co_thres"
-    />
+    <input type="number" *ngIf="editMode" [(ngModel)]="user.thresholds.co_thres" />
   </div>
   <div class="info-display">
     <div>Pressure</div>
     <div *ngIf="!editMode">
       {{
-        user.thresholds.pressure_mb_thres !== 0
-          ? user.thresholds.pressure_mb_thres + " mb"
-          : "N/A"
+      user.thresholds.pressure_mb_thres !== 0
+      ? user.thresholds.pressure_mb_thres + " mb"
+      : "N/A"
       }}
     </div>
-    <input
-      type="number"
-      *ngIf="editMode"
-      [(ngModel)]="user.thresholds.pressure_mb_thres"
-    />
+    <input type="number" *ngIf="editMode" [(ngModel)]="user.thresholds.pressure_mb_thres" />
   </div>
   <div class="info-display">
     <div>Visibility</div>
     <div *ngIf="!editMode">
       {{
-        user.thresholds.visibility_km_thres !== 0
-          ? user.thresholds.visibility_km_thres + " km"
-          : "N/A"
+      user.thresholds.visibility_km_thres !== 0
+      ? user.thresholds.visibility_km_thres + " km"
+      : "N/A"
       }}
     </div>
-    <input
-      type="number"
-      *ngIf="editMode"
-      [(ngModel)]="user.thresholds.visibility_km_thres"
-    />
+    <input type="number" *ngIf="editMode" [(ngModel)]="user.thresholds.visibility_km_thres" />
   </div>
   <div class="info-display">
     <div>Wind Speed</div>
     <div *ngIf="!editMode">
       {{
-        user.thresholds.wind_kph_thres !== 0
-          ? user.thresholds.wind_kph_thres + " kph"
-          : "N/A"
+      user.thresholds.wind_kph_thres !== 0
+      ? user.thresholds.wind_kph_thres + " kph"
+      : "N/A"
       }}
     </div>
-    <input
-      type="number"
-      *ngIf="editMode"
-      [(ngModel)]="user.thresholds.wind_kph_thres"
-    />
+    <input type="number" *ngIf="editMode" [(ngModel)]="user.thresholds.wind_kph_thres" />
   </div>
   <div class="info-display">
     <div>UV Index</div>
     <div *ngIf="!editMode">
       {{ user.thresholds.uv_thres !== 0 ? user.thresholds.uv_thres : "N/A" }}
     </div>
-    <input
-      type="number"
-      *ngIf="editMode"
-      [(ngModel)]="user.thresholds.uv_thres"
-    />
+    <input type="number" *ngIf="editMode" [(ngModel)]="user.thresholds.uv_thres" />
   </div>
 
   <ng-template pTemplate="footer">
     <p-divider></p-divider>
     <div class="card-buttons">
-      <p-button
-        *ngIf="!editMode"
-        icon="pi pi-pencil"
-        (click)="toggleEditMode()"
-        severity="secondary"
-      ></p-button>
-      <p-button
-        *ngIf="editMode"
-        icon="pi pi-check"
-        (click)="saveChanges()"
-        severity="success"
-      ></p-button>
-      <p-button
-        *ngIf="editMode"
-        icon="pi pi-times"
-        (click)="cancelEdit()"
-        severity="secondary"
-        label="Cancel Editing"
-      ></p-button>
+      <p-button *ngIf="!editMode" icon="pi pi-pencil" (click)="toggleEditMode()" severity="secondary"></p-button>
+      <p-button *ngIf="editMode" icon="pi pi-check" (click)="saveChanges()" severity="success"></p-button>
+      <p-button *ngIf="editMode" icon="pi pi-times" (click)="cancelEdit()" severity="secondary"
+        label="Cancel Editing"></p-button>
       <!-- <p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>
       <p-button *ngIf="!editMode" icon="pi pi-times" severity="danger" (click)="confirmDeletion()"></p-button> -->
     </div>
