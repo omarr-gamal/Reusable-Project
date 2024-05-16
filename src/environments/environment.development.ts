@@ -1,5 +1,6 @@
 export const environment = {
     production: false,
+    weatherApiKey: '798ac0918f3e4c2eb47163025241505',
     firebase: {
         apiKey: "AIzaSyBOcjqCGQGm0dlIweK-QtvQD5X6G_Co_dY",
         authDomain: "uid-budget-tracker.firebaseapp.com",

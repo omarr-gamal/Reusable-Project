@@ -62,8 +62,8 @@ import { SliderModule } from 'primeng/slider';
 
 import { DxDataGridModule } from 'devextreme-angular/ui/data-grid';
 import { DxBulletModule, DxTemplateModule } from 'devextreme-angular';
-
 import { HttpClientModule } from '@angular/common/http';
+
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 
 
@@ -93,6 +93,7 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
     provideAuth(() => getAuth()),
     PaginatorModule,
     ReactiveFormsModule,
+    HttpClientModule,
     //primeng
     MenubarModule,
     ButtonModule,
@@ -133,4 +134,4 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
   providers: [{ provide: FIREBASE_OPTIONS, useValue: environment.firebase }],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
