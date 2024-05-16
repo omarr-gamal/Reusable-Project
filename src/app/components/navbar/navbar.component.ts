@@ -17,8 +17,8 @@ export class NavbarComponent {
   constructor(
     public auth: AuthService,
     public userData: UserDataService,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.auth.user$.subscribe((user) => {
@@ -55,19 +55,28 @@ export class NavbarComponent {
     ];
 
     if (this.user) {
-      this.logOutItems = [{
-        label: this.user.name,
-        items: [
-          {
-            label: 'Logout',
-            icon: 'pi pi-sign-out',
-            command: () => {
-              this.auth.logout();
-              this.redirectToLoginPage();
+      this.logOutItems = [
+        {
+          label: this.user.name,
+          items: [
+            {
+              label: 'Logout',
+              icon: 'pi pi-sign-out',
+              command: () => {
+                this.auth.logout();
+                this.redirectToLoginPage();
+              },
             },
-          },
-        ],
-      }];
+            {
+              label: 'Profile',
+              icon: 'pi pi-user',
+              command: () => {
+                this.router.navigate(['/profile']);
+              },
+            },
+          ],
+        },
+      ];
     }
   }
 

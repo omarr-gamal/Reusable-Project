@@ -56,10 +56,11 @@ export class ProfileCardComponent {
   toggleEditMode() {
     if (!this.editMode) {
       // We're entering edit mode, so store the original user data
-      this.originalUser = {
-        ...this.user,
-        thresholds: { ...this.user.thresholds },
-      };
+      // this.originalUser = {
+      //   ...this.user,
+      //   thresholds: { ...this.user.thresholds },
+      // };
+      this.originalUser = JSON.parse(JSON.stringify(this.user)); // Deep clone user object
     }
     this.editMode = !this.editMode;
   }
