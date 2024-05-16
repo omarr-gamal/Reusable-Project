@@ -6,7 +6,7 @@
 >
   <div class="img-container">
     <p-avatar
-      [image]="user.photoURL"
+      [image]="user.photoURL || 'assets/default.jpg'"
       styleClass="mr-2"
       shape="circle"
       [style]="{ width: '200px', height: '200px', alignSelf: 'center' }"

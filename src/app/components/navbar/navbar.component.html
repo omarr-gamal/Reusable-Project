@@ -15,7 +15,7 @@
     <div *ngIf="user">
       <p-menubar [model]="logOutItems" (click)="activeMenu($event)">
         <p-avatar
-          image="{{ user?.photoURL || 'assets/logo.png' }}"
+          image="{{ user?.photoURL || 'assets/default.jpg' }}"
           shape="circle"
         />
         <ng-template pTemplate="start"> </ng-template>
