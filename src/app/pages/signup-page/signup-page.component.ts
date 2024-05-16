@@ -32,9 +32,9 @@ export class SignupPageComponent {
   signup() {
     const { email, password, name, age, gender } = this.signupForm.value;
 
-    this.auth.emailSignUp(email!, password!, name!, age!, gender!).subscribe({
-      next: (loggedIn: Boolean) => {
-        if (loggedIn) {
+    this.auth.signup(email!, password!, name!, age!, gender!).subscribe({
+      next: (result: any) => {
+        if (result) {
           this.router.navigate(['/']); 
         } else {
           this.signupError = true;

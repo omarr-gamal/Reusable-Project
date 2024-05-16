@@ -4,6 +4,7 @@ import { Firestore } from '@angular/fire/firestore';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { Router } from '@angular/router';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-login-page',
@@ -29,9 +30,9 @@ export class LoginPageComponent {
   login() {
     const { email, password } = this.loginForm.value;
 
-    this.auth.emailSignIn(email!, password!).subscribe({
-      next: (loggedIn: Boolean) => {
-        if (loggedIn) {
+    this.auth.login(email!, password!).subscribe({
+      next: (user: any) => {
+        if (user) {
           this.router.navigate(['/']); 
         } else {
           this.loginError = true;
