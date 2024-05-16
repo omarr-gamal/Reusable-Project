@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
+import { UserDataService } from '../../services/user-data.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,11 @@ export class NavbarComponent {
   items: MenuItem[] = [];
   user: any;
 
-  constructor(public auth: AuthService, private router: Router) { }
+  constructor(
+    public auth: AuthService, 
+    public userData: UserDataService,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
     this.auth.user$.subscribe((user) => {
