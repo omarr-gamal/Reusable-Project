@@ -63,6 +63,7 @@ export class AuthService {
   }
 
   logout(): void {
+    this.signOut()
     this.deleteUserFromLocalStorage();
     this.userSubject.next(null);
     this.router.navigate(['/login']);
@@ -71,7 +72,7 @@ export class AuthService {
   refreshUserState() {
     this.user$.subscribe((user: any) => {
       if (user) {
-        this.login(user.email!, user.password!).subscribe();
+        this.login(user.email!, user.password!).pipe(take(1)).subscribe();
       }
     });
   }
@@ -84,13 +85,15 @@ export class AuthService {
       if (newUser) {
         user = {
           ...defaultUser,
-          uid: result.user.uid,
           name: result.user.displayName,
           email: result.user.email,
           photoURL: result.user.photoURL,
         }
-        return this.updateUserData(user as User);
+        
+        this.signup(user.email!, "password1234", user.name!, user.age!, user.gender!).pipe(take(1)).subscribe();
+        return true;
       } else {
+        this.login(result.user.email!, "password1234").pipe(take(1)).subscribe();
         return of(true);
       }
     }).catch((error) => {
@@ -98,49 +101,8 @@ export class AuthService {
     });
   }
 
-  emailSignIn(email: string, password: string): Observable<Boolean> {
-    return from(this.afAuth.signInWithEmailAndPassword(email, password)).pipe(
-      map((credential) => {
-        if (credential && credential.user) {
-          return true
-        } else {
-          return false;
-        }
-      }),
-    )
-  }
-
-  emailSignUp(email: string, password: string, displayName: string, age: number, gender: string): Observable<any> {
-    return from(this.afAuth.createUserWithEmailAndPassword(email, password)).pipe(
-      switchMap((credential) => {
-        if (credential && credential.user) {
-          const user = {
-            ...defaultUser,
-            uid: credential.user.uid,
-            displayName: displayName,
-            email: email,
-          }
-
-          return from(this.updateUserData(user as User));
-        } else {
-          return of(null);
-        }
-      }),
-    )
-  }
-
-  private updateUserData(user: User): Observable<Boolean> {
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.id}`);
-
-    return from(userRef.set(user, { merge: true })).pipe(
-      map(() => true), // If the promise resolves, emit true
-      catchError(() => of(false)) // If there's an error, emit false
-    );
-  }
-
   async signOut() {
     await this.afAuth.signOut();
-    return this.router.navigate(['/']);
   }
 
   private saveUserToLocalStorage(user: User): void {
