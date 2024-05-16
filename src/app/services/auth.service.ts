@@ -16,6 +16,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider, getAdditionalUserInfo } f
 })
 export class AuthService {
   private static backendUrl: string = 'https://localhost:44339';
+  private userSubject: BehaviorSubject<User | null | undefined>;
 
   user$: Observable<User | null | undefined>;
 
@@ -25,7 +26,8 @@ export class AuthService {
     private afs: AngularFirestore,
     private router: Router
   ) { 
-    this.user$ = of(this.loadUserFromLocalStorage());
+    this.userSubject = new BehaviorSubject<User | null | undefined>(this.loadUserFromLocalStorage());
+    this.user$ = this.userSubject.asObservable();
   }
 
   login(email: string, password: string): Observable<User | null> {
@@ -33,6 +35,7 @@ export class AuthService {
     return this.http.post<any>(`${AuthService.backendUrl}/api/login`, requestBody).pipe(
       map(response => {
         this.saveUserToLocalStorage(response.User);
+        this.userSubject.next(response.User);
         return response.User
       }),
       catchError((err) => {
@@ -53,6 +56,7 @@ export class AuthService {
     return this.http.post<any>(`${AuthService.backendUrl}/api/register`, requestBody).pipe(
       map(response => {
         this.saveUserToLocalStorage(response.User);
+        this.userSubject.next(response.User);
         return response.User
       })
     )
@@ -60,7 +64,7 @@ export class AuthService {
 
   logout(): void {
     this.deleteUserFromLocalStorage();
-    this.user$ = of(null);
+    this.userSubject.next(null);
     this.router.navigate(['/login']);
   }
 
