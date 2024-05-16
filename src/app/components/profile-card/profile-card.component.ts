@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { User, defaultUser } from '../../models/user.model';
+import { UserDataService } from '../../services/user-data.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-profile-card',
@@ -13,8 +15,9 @@ export class ProfileCardComponent {
   editMode: boolean = false;
 
   constructor(
-    // private userService: UserService,
     // private confirmationService: ConfirmationService,
+    private userDataService: UserDataService,
+    private authService: AuthService,
     private primengConfig: PrimeNGConfig
   ) {
     this.user = {
@@ -42,6 +45,14 @@ export class ProfileCardComponent {
     this.originalUser = this.user;
   }
 
+  ngOnInit(): void {
+    this.authService.user$.subscribe((currentUser) => {
+      if (currentUser) {
+        this.user = currentUser;
+      }
+    });
+  }
+
   toggleEditMode() {
     if (!this.editMode) {
       // We're entering edit mode, so store the original user data
@@ -55,37 +66,21 @@ export class ProfileCardComponent {
   saveChanges() {
     //// update the user data
 
-    // if (this.monthlyIncome.id) {
-    //   this.incomesService
-    //     .updateMonthlyIncome(this.monthlyIncome.id, this.monthlyIncome)
-    //     .subscribe(
-    //       (result) => {
-    //         console.log('Income updated successfully');
-    //         this.toggleEditMode();
-    //       },
-    //       (error) => {
-    //         console.log('Error updating income: ', error);
-    //       }
-    //     );
-    // }
+    if (this.user.id) {
+      this.userDataService.updateUser(this.user).subscribe(
+        (result) => {
+          console.log('User updated successfully');
+          this.toggleEditMode();
+        },
+        (error) => {
+          console.log('Error updating User: ', error);
+        }
+      );
+    }
     this.toggleEditMode();
   }
   cancelEdit() {
     this.user = this.originalUser;
     this.toggleEditMode();
   }
-  // deleteUser() {
-  //   if (this.user.uid) {
-  //     //// delete the user
-
-  //     // this.incomesService.deleteMonthlyIncome(this.monthlyIncome.id).subscribe(
-  //     //   (result) => {
-  //     //     console.log('Income deleted successfully');
-  //     //   },
-  //     //   (error) => {
-  //     //     console.log('Error deleting income: ', error);
-  //     //   }
-  //     // );
-  //   }
-  // }
 }
