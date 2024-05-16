@@ -1,5 +1,34 @@
-<app-page-wrapper>
-    <!-- <app-dashboard-summary-cards />
-    <app-dashboard-expenses-broken-down />
-    <app-dashboard-monthly-chart /> -->
-</app-page-wrapper> 
+<div class="top-section">
+    <div class="">
+        <label for="location" style="margin-right: 20px; font-weight: bold;">Enter Location</label>
+        <input id="location" type="text" pInputText [(ngModel)]="location">
+    </div>
+    <div class="">
+        <button pButton type="button" label="Get Weather" (click)="onSubmit()"></button>
+    </div>
+</div>
+
+<app-custom-panel *ngIf="weatherData" title="Result">
+    <div>
+        <h3>Weather in {{ weatherData.location.name }}, {{ weatherData.location.country }}</h3>
+        <img src="{{ weatherData.current.condition.icon }}" alt="{{ weatherData.current.condition.text }}">
+        <h3>{{ weatherData.current.temp_c }}°C / {{ weatherData.current.temp_f }}°F</h3>
+        <p>{{ weatherData.current.condition.text }}</p>
+        <p><strong>Temperature:</strong> {{ weatherData.current.temp_c }}°C</p>
+    </div>
+    <div class="">
+        <div class="">
+            <p><strong>Humidity:</strong> {{ weatherData.current.humidity }}%</p>
+            <p><strong>Wind:</strong> {{ weatherData.current.wind_kph }} kph ({{ weatherData.current.wind_dir }})</p>
+            <p><strong>Pressure:</strong> {{ weatherData.current.pressure_mb }} mb</p>
+            <p><strong>Visibility:</strong> {{ weatherData.current.vis_km }} km</p>
+            <p><strong>UV Index:</strong> {{ weatherData.current.uv }}</p>
+        </div>
+        <div class="">
+            <h4>Air Quality</h4>
+            <p><strong>CO:</strong> {{ weatherData.current.air_quality.co }} μg/m³</p>
+            <p><strong>PM2.5:</strong> {{ weatherData.current.air_quality.pm2_5 }} μg/m³</p>
+            <p><strong>PM10:</strong> {{ weatherData.current.air_quality.pm10 }} μg/m³</p>
+        </div>
+    </div>
+</app-custom-panel>
