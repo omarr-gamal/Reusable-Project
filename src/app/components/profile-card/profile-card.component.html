@@ -1,12 +1,8 @@
 <p-card header="My Profile" subheader="View and Edit Your Profile Information " [style]="{ width: '420px' }"
   class="my-card">
   <div class="img-container">
-    <p-avatar
-      [image]="user.photoURL || 'assets/default.jpg'"
-      styleClass="mr-2"
-      shape="circle"
-      [style]="{ width: '200px', height: '200px', alignSelf: 'center' }"
-    ></p-avatar>
+    <p-avatar [image]="user.photoURL || 'assets/default.png'" styleClass="mr-2" shape="circle"
+      [style]="{ width: '200px', height: '200px', alignSelf: 'center' }"></p-avatar>
   </div>
   <p-divider></p-divider>
   <div class="info-display">
