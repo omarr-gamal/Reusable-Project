@@ -27,6 +27,17 @@ export class ProfileCardComponent {
       age: 22,
       gender: 'F',
       joinedAt: new Date().toLocaleString(),
+      thresholds: {
+        temperature_thres: 0.0,
+        humidity_thres: 0.0,
+        pm25_thres: 0.0,
+        pm10_thres: 0.0,
+        co_thres: 0.0,
+        pressure_mb_thres: 0.0,
+        visibility_km_thres: 0.0,
+        wind_kph_thres: 0.0,
+        uv_thres: 0,
+      },
     };
     this.originalUser = this.user;
   }
@@ -34,7 +45,10 @@ export class ProfileCardComponent {
   toggleEditMode() {
     if (!this.editMode) {
       // We're entering edit mode, so store the original user data
-      this.originalUser = { ...this.user };
+      this.originalUser = {
+        ...this.user,
+        thresholds: { ...this.user.thresholds },
+      };
     }
     this.editMode = !this.editMode;
   }

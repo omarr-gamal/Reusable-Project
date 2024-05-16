@@ -30,11 +30,6 @@
   .bold-text {
     font-weight: bold;
   }
-
-  .description {
-    height: 60px;
-    overflow-y: auto;
-  }
 }
 
 .img-container {

@@ -4,7 +4,6 @@
   [style]="{ width: '420px' }"
   class="my-card"
 >
-  <!-- add user image -->
   <div class="img-container">
     <p-avatar
       [image]="user.photoURL"
@@ -46,6 +45,90 @@
     </div>
     <input type="number" *ngIf="editMode" [(ngModel)]="user.age" />
   </div>
+  <div class="info-display">
+    <div>Temperature</div>
+    <div *ngIf="!editMode">{{ user.thresholds.temperature_thres }} °C</div>
+    <input
+      type="number"
+      *ngIf="editMode"
+      [(ngModel)]="user.thresholds.temperature_thres"
+    />
+  </div>
+  <div class="info-display">
+    <div>Particulate Matter (PM2.5)</div>
+    <div *ngIf="!editMode">{{ user.thresholds.pm25_thres }} µg/m³</div>
+    <input
+      type="number"
+      *ngIf="editMode"
+      [(ngModel)]="user.thresholds.pm25_thres"
+    />
+  </div>
+  <div class="info-display">
+    <div>Particulate Matter (PM10)</div>
+    <div *ngIf="!editMode">{{ user.thresholds.pm10_thres }} µg/m³</div>
+    <input
+      type="number"
+      *ngIf="editMode"
+      [(ngModel)]="user.thresholds.pm10_thres"
+    />
+  </div>
+  <div class="info-display">
+    <div>Humidity</div>
+    <div *ngIf="!editMode">{{ user.thresholds.humidity_thres }} %</div>
+    <input
+      type="number"
+      *ngIf="editMode"
+      [(ngModel)]="user.thresholds.humidity_thres"
+    />
+  </div>
+  <div class="info-display">
+    <div>Carbon Monoxide (CO)</div>
+    <div *ngIf="!editMode">{{ user.thresholds.co_thres }} ppm</div>
+    <input
+      type="number"
+      *ngIf="editMode"
+      [(ngModel)]="user.thresholds.co_thres"
+    />
+  </div>
+  <div class="info-display">
+    <div>Pressure</div>
+    <div *ngIf="!editMode">{{ user.thresholds.pressure_mb_thres }} mb</div>
+    <input
+      type="number"
+      *ngIf="editMode"
+      [(ngModel)]="user.thresholds.pressure_mb_thres"
+    />
+  </div>
+  <div class="info-display">
+    <div>Visibility</div>
+    <div *ngIf="!editMode">{{ user.thresholds.visibility_km_thres }} km</div>
+    <input
+      type="number"
+      *ngIf="editMode"
+      [(ngModel)]="user.thresholds.visibility_km_thres"
+    />
+  </div>
+  <div class="info-display">
+    <div>Wind Speed</div>
+    <div *ngIf="!editMode">{{ user.thresholds.wind_kph_thres }} kph</div>
+    <input
+      type="number"
+      *ngIf="editMode"
+      [(ngModel)]="user.thresholds.wind_kph_thres"
+    />
+  </div>
+  <div class="info-display">
+    <div>UV Index</div>
+    <div *ngIf="!editMode">
+      {{ user.thresholds.uv_thres }}
+    </div>
+    <input
+      type="number"
+      *ngIf="editMode"
+      [(ngModel)]="user.thresholds.uv_thres"
+    />
+  </div>
+
   <ng-template pTemplate="footer">
     <p-divider />
     <div class="card-buttons">
