@@ -15,7 +15,7 @@ export class NavbarComponent {
   user: any;
 
   constructor(
-    public auth: AuthService, 
+    public auth: AuthService,
     public userData: UserDataService,
     private router: Router,
   ) { }
@@ -46,6 +46,11 @@ export class NavbarComponent {
         label: 'Dashboard',
         icon: 'pi pi-home',
         routerLink: ['/dashboard'],
+      },
+      {
+        label: 'Statistics',
+        icon: 'pi pi-chart-line',
+        routerLink: ['/statistics'],
       },
     ];
 

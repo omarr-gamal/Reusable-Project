@@ -1,0 +1,16 @@
+<app-page-wrapper>
+    <app-custom-panel title="Enter the desired date range and location please">
+        <p-calendar [(ngModel)]="dateRange" selectionMode="range" [minDate]="minDate" [maxDate]="maxDate"
+            (onSelect)="onDateRangeChange()" dateFormat="yy-mm-dd" placeholder="Select a date range"></p-calendar>
+        <input id="location" style="margin: 0px 20px;" type="text" pInputText [(ngModel)]="location">
+        <p-button label="Show Graphs" icon="pi pi-chart-line" (onClick)="onDateRangeChange()"></p-button>
+        <p *ngIf="errorMessage" severity="error" style="color: red;">{{errorMessage}}</p>
+    </app-custom-panel>
+    <app-custom-panel *ngIf="chartData" style="margin: 20px;">
+        <p-dropdown [options]="graphOptions" [(ngModel)]="selectedGraph" (onChange)="updateChart()"></p-dropdown>
+        <p-chart type="line" [data]="chartData" [options]="chartOptions"
+            *ngIf="selectedGraph !== 'condition' && selectedGraph !== 'precipitation'"></p-chart>
+        <p-chart type="bar" [data]="chartData" [options]="chartOptions"
+            *ngIf="selectedGraph === 'condition' || selectedGraph === 'precipitation'"></p-chart>
+    </app-custom-panel>
+</app-page-wrapper>

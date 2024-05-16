@@ -11,7 +11,7 @@ import { Subscription, interval } from 'rxjs';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  location: string = 'Cairo'; // Default location
+  location: string = 'Cairo'; 
   weatherData: CurrentWeatherData | null = null;
   private weatherSubscription: Subscription | null = null;
   private intervalId: any;
@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getWeather(location: string): void {
-    console.log('hehe');
+    this.location = location;
     this.weatherSubscription = this.weatherApiService.getWeather(location).subscribe(data => {
       this.weatherData = data;
     });

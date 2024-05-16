@@ -65,6 +65,7 @@ import { DxBulletModule, DxTemplateModule } from 'devextreme-angular';
 import { HttpClientModule } from '@angular/common/http';
 
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { StatisticsPageComponent } from './pages/statistics-page/statistics-page.component';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
     SignupPageComponent,
     ProfileCardComponent,
     ProfilePageComponent,
+    StatisticsPageComponent,
   ],
   imports: [
     AccordionModule,
@@ -93,7 +95,6 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
     provideAuth(() => getAuth()),
     PaginatorModule,
     ReactiveFormsModule,
-    HttpClientModule,
     //primeng
     MenubarModule,
     ButtonModule,
