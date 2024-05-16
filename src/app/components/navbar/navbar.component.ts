@@ -46,7 +46,7 @@ export class NavbarComponent {
 
     if (this.user) {
       this.logOutItems = [{
-        label: this.user.displayName,
+        label: this.user.name,
         items: [
           {
             label: 'Logout',
