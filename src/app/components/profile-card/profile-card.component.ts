@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
-import { User } from '../../models/user.model';
+import { User, defaultUser } from '../../models/user.model';
+
 @Component({
   selector: 'app-profile-card',
   templateUrl: './profile-card.component.html',
@@ -17,6 +18,7 @@ export class ProfileCardComponent {
     private primengConfig: PrimeNGConfig
   ) {
     this.user = {
+      ...defaultUser,
       uid: '',
       email: 'user@example.com',
       name: 'User Name',
