@@ -1,34 +1,60 @@
-<div class="top-section">
-    <div class="">
-        <label for="location" style="margin-right: 20px; font-weight: bold;">Enter Location</label>
+<div [ngClass]="{'day-background': isDay, 'night-background': !isDay}" >
+    <div class="top-section" >
+      <div class="">
+        <label for="location" style="margin-right: 20px; font-weight: bold; background: rgba(255, 255, 255, 0.8); border-radius: 10px; padding: 10px;">Enter Location</label>
         <input id="location" type="text" pInputText [(ngModel)]="location">
-    </div>
-    <div class="">
+      </div>
+      <div class="">
         <button pButton type="button" label="Get Weather" (click)="onSubmit()"></button>
+      </div>
     </div>
-</div>
-
-<app-custom-panel *ngIf="weatherData" title="Result">
-    <div>
-        <h3>Weather in {{ weatherData.location.name }}, {{ weatherData.location.country }}</h3>
-        <img src="{{ weatherData.current.condition.icon }}" alt="{{ weatherData.current.condition.text }}">
-        <h3>{{ weatherData.current.temp_c }}°C / {{ weatherData.current.temp_f }}°F</h3>
-        <p>{{ weatherData.current.condition.text }}</p>
-        <p><strong>Temperature:</strong> {{ weatherData.current.temp_c }}°C</p>
-    </div>
-    <div class="">
-        <div class="">
-            <p><strong>Humidity:</strong> {{ weatherData.current.humidity }}%</p>
-            <p><strong>Wind:</strong> {{ weatherData.current.wind_kph }} kph ({{ weatherData.current.wind_dir }})</p>
-            <p><strong>Pressure:</strong> {{ weatherData.current.pressure_mb }} mb</p>
-            <p><strong>Visibility:</strong> {{ weatherData.current.vis_km }} km</p>
-            <p><strong>UV Index:</strong> {{ weatherData.current.uv }}</p>
+  
+    <app-custom-panel *ngIf="weatherData" title="Result" >
+      <div [ngClass]="{'day-background': isDay, 'night-background': !isDay}">
+        <div class="opacity">
+            <div class="container">
+            <h3>Weather in {{ weatherData.location.name }}, {{ weatherData.location.country }}</h3>
+            <img src="{{ weatherData.current.condition.icon }}" alt="{{ weatherData.current.condition.text }}">
+            <h3 id="temp-text">{{ weatherData.current.temp_c }}°C / {{ weatherData.current.temp_f }}°F</h3>
+            <p class="weather-condition-text" id="condition-text">{{ weatherData.current.condition.text }}</p>
+            </div>
+            <div class="card-grid">
+            <p-card class="weather-card">
+                <ng-template pTemplate="title">Temperature</ng-template>
+                <ng-template pTemplate="content"><p class="weather-condition-text">{{ weatherData.current.temp_c }}°C</p></ng-template>
+            </p-card>
+            <p-card class="weather-card">
+                <ng-template pTemplate="title">Humidity</ng-template>
+                <ng-template pTemplate="content"><p class="weather-condition-text">{{ weatherData.current.humidity }}%</p></ng-template>
+            </p-card>
+            <p-card class="weather-card">
+                <ng-template pTemplate="title">Wind</ng-template>
+                <ng-template pTemplate="content"><p class="weather-condition-text">{{ weatherData.current.wind_kph }} kph ({{ weatherData.current.wind_dir }})</p></ng-template>
+            </p-card>
+            <p-card class="weather-card">
+                <ng-template pTemplate="title">Pressure</ng-template>
+                <ng-template pTemplate="content"><p class="weather-condition-text">{{ weatherData.current.pressure_mb }} mb</p></ng-template>
+            </p-card>
+            <p-card class="weather-card">
+                <ng-template pTemplate="title">Visibility</ng-template>
+                <ng-template pTemplate="content"><p class="weather-condition-text">{{ weatherData.current.vis_km }} km</p></ng-template>
+            </p-card>
+            <p-card class="weather-card">
+                <ng-template pTemplate="title">UV Index</ng-template>
+                <ng-template pTemplate="content"><p class="weather-condition-text">{{ weatherData.current.uv }}</p></ng-template>
+            </p-card>
+            <p-card class="weather-card">
+                <ng-template pTemplate="title"><p>Air Quality</p></ng-template>
+                <ng-template pTemplate="content">
+                <div class="container">
+                    <p class="weather-condition-text">CO: {{ weatherData.current.air_quality.co }} μg/m³</p><br>
+                    <p class="weather-condition-text">PM2.5: {{ weatherData.current.air_quality.pm2_5 }} μg/m³</p><br>
+                    <p class="weather-condition-text">PM10: {{ weatherData.current.air_quality.pm10 }} μg/m³</p>
+                </div>
+                </ng-template>
+            </p-card>
+            </div>
         </div>
-        <div class="">
-            <h4>Air Quality</h4>
-            <p><strong>CO:</strong> {{ weatherData.current.air_quality.co }} μg/m³</p>
-            <p><strong>PM2.5:</strong> {{ weatherData.current.air_quality.pm2_5 }} μg/m³</p>
-            <p><strong>PM10:</strong> {{ weatherData.current.air_quality.pm10 }} μg/m³</p>
-        </div>
-    </div>
-</app-custom-panel>
+      </div>
+    </app-custom-panel>
+  </div>

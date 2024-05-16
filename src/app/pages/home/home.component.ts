@@ -1,9 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Firestore } from '@angular/fire/firestore';
-import { AuthService } from '../../services/auth.service';
-import { CurrentWeatherData } from '../../models/weather-data.model';
+import { Subscription } from 'rxjs';
 import { WeatherApiService } from '../../services/weather-api.service';
-import { Subscription, interval } from 'rxjs';
+import { CurrentWeatherData } from '../../models/weather-data.model';
 
 @Component({
   selector: 'app-home',
@@ -11,8 +9,9 @@ import { Subscription, interval } from 'rxjs';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  location: string = 'Cairo'; 
+  location: string = 'Cairo';
   weatherData: CurrentWeatherData | null = null;
+  isDay: boolean = true; // Property to determine if it's day or night
   private weatherSubscription: Subscription | null = null;
   private intervalId: any;
 
@@ -42,10 +41,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.location = location;
     this.weatherSubscription = this.weatherApiService.getWeather(location).subscribe(data => {
       this.weatherData = data;
+      this.checkDayOrNight();
     });
   }
 
   onSubmit(): void {
     this.getWeather(this.location);
+  }
+
+  private checkDayOrNight(): void {
+    if (this.weatherData) {
+      const isDayTime = this.weatherData.current.is_day;
+      this.isDay = isDayTime === 1;
+    }
   }
 }

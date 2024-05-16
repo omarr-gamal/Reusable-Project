@@ -1,16 +1,89 @@
 p-card {
     margin: 20px;
+   
 }
 
 .top-section {
+
     display: flex;
     justify-content: space-between;
-    margin: 20px;
+   padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+
 }
-
-
 
 img {
     width: 64px;
     height: 64px;
 }
+
+p {
+    text-align: center;
+}
+
+.container {
+    
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+.opacity{
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.card-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.weather-card {
+    flex: 1 1 calc(33.333% - 20px);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.weather-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.air-quality p {
+    font-size: 1.2em; 
+    font-weight: bold;
+    color: #333; 
+}
+
+.weather-condition-text {
+    font-size: 1.2em; 
+    font-weight: bold;
+    color: #333; 
+}
+
+
+.day-background {
+    background: url('../../../assets/day-sky.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.night-background {
+    background: url('../../../assets/night-sky.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+#condition-text{
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+   padding: 10px;
+    
+}
+
+#temp-text{
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+   padding: 10px;
+    
+}
+
+
