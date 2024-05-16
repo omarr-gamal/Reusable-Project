@@ -18,7 +18,7 @@ export class NavbarComponent {
     public auth: AuthService,
     public userData: UserDataService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.auth.user$.subscribe((user) => {

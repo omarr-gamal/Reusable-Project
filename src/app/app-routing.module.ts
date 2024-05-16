@@ -10,9 +10,8 @@ import { StatisticsPageComponent } from './pages/statistics-page/statistics-page
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 
 const routes: Routes = [
-  // { path: '', component: HomeComponent, canActivate: [authGuard] },
-  { path: '', component: HomeComponent },
-  { path: 'statistics', component: StatisticsPageComponent },
+  { path: '', component: HomeComponent, canActivate: [authGuard] },
+  { path: 'statistics', component: StatisticsPageComponent, canActivate: [authGuard] },
   { path: 'login', component: LoginPageComponent },
   { path: 'signup', component: SignupPageComponent },
   { path: 'profile', component: ProfilePageComponent },
@@ -23,4 +22,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
