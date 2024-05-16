@@ -6,18 +6,14 @@ import { Observable, catchError, map, of, switchMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserDataService {
-
-  constructor(
-    private http: HttpClient, 
-    private auth: AuthService
-  ) { }
+  constructor(private http: HttpClient, private auth: AuthService) {}
 
   updateUser(data: any): Observable<boolean> {
     return this.auth.user$.pipe(
-      switchMap(user => {
+      switchMap((user) => {
         if (user) {
           const updatedUser = { ...user, ...data };
           const userId = user.id;
@@ -37,5 +33,4 @@ export class UserDataService {
       })
     );
   }
-
 }

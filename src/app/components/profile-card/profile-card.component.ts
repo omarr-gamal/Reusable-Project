@@ -71,7 +71,7 @@ export class ProfileCardComponent {
       this.userDataService.updateUser(this.user).subscribe(
         (result) => {
           console.log('User updated successfully');
-          this.toggleEditMode();
+          // this.toggleEditMode();
         },
         (error) => {
           console.log('Error updating User: ', error);
