@@ -175,7 +175,7 @@
   <div class="info-display">
     <div>UV Index</div>
     <div *ngIf="!editMode">
-      {{ user.thresholds.uv_thres }}
+      {{ user.thresholds.uv_thres !== 0 ? user.thresholds.uv_thres : "N/A" }}
     </div>
     <input
       type="number"
