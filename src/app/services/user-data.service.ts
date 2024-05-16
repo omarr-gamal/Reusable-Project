@@ -6,35 +6,32 @@ import { Observable, catchError, map, of, switchMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserDataService {
-
-  constructor(
-    private http: HttpClient, 
-    private auth: AuthService
-  ) { }
+  constructor(private http: HttpClient, private auth: AuthService) {}
 
   updateUser(data: any): Observable<boolean> {
     return this.auth.user$.pipe(
-      switchMap(user => {
+      switchMap((user) => {
         if (user) {
           const userId = user.id;
-          return this.http.put<any>(`${AuthService.backendUrl}/api/edituser/${userId}`, data).pipe(
-            map(() => {
-              this.auth.refreshUserState();
-              return true;
-            }),
-            catchError(err => {
-              console.log(err);
-              return of(false);
-            })
-          );
+          return this.http
+            .put<any>(`${AuthService.backendUrl}/api/edituser/${userId}`, data)
+            .pipe(
+              map(() => {
+                //this.auth.refreshUserState();
+                return true;
+              }),
+              catchError((err) => {
+                console.log(err);
+                return of(false);
+              })
+            );
         } else {
           return of(false);
         }
       })
     );
   }
-
 }
