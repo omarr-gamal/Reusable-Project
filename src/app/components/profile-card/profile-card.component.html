@@ -1,0 +1,75 @@
+<p-card
+  header="My Profile"
+  subheader="View and Edit Your Profile Information "
+  [style]="{ width: '420px' }"
+  class="my-card"
+>
+  <!-- add user image -->
+  <div class="img-container">
+    <p-avatar
+      [image]="user.photoURL"
+      styleClass="mr-2"
+      shape="circle"
+      [style]="{ width: '200px', height: '200px', alignSelf: 'center' }"
+    />
+  </div>
+  <p-divider />
+  <div class="info-display">
+    <div>Name:</div>
+    <div class="bold-text" *ngIf="!editMode">
+      {{ user.name }}
+    </div>
+    <input
+      inputId="name"
+      class="bold-text"
+      *ngIf="editMode"
+      [(ngModel)]="user.name"
+    />
+  </div>
+  <div class="info-display">
+    <div>Email</div>
+    <div>
+      {{ user.email }}
+    </div>
+  </div>
+  <div class="info-display">
+    <div>Gender</div>
+    <div *ngIf="!editMode">
+      {{ user.gender }}
+    </div>
+    <input *ngIf="editMode" [(ngModel)]="user.gender" />
+  </div>
+  <div class="info-display">
+    <div>Age</div>
+    <div *ngIf="!editMode">
+      {{ user.age }}
+    </div>
+    <input type="number" *ngIf="editMode" [(ngModel)]="user.age" />
+  </div>
+  <ng-template pTemplate="footer">
+    <p-divider />
+    <div class="card-buttons">
+      <p-button
+        *ngIf="!editMode"
+        icon="pi pi-pencil"
+        (click)="toggleEditMode()"
+        severity="secondary"
+      ></p-button>
+      <p-button
+        *ngIf="editMode"
+        icon="pi pi-check"
+        (click)="saveChanges()"
+        severity="success"
+      ></p-button>
+      <p-button
+        *ngIf="editMode"
+        icon="pi pi-times"
+        (click)="cancelEdit()"
+        severity="secondary"
+        label="Cancel Editing"
+      ></p-button>
+      <!-- <p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>
+      <p-button *ngIf="!editMode" icon="pi pi-times" severity="danger" (click)="confirmDeletion()"></p-button> -->
+    </div>
+  </ng-template>
+</p-card>

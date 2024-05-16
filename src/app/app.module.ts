@@ -16,6 +16,7 @@ import { environment } from '../environments/environment';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './pages/home/home.component';
+import { ProfileCardComponent } from './components/profile-card/profile-card.component';
 
 //primeng components
 import { MenubarModule } from 'primeng/menubar';
@@ -43,6 +44,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
+import { ImageModule } from 'primeng/image';
 
 import { CustomPanelComponent } from './components/custom-panel/custom-panel.component';
 import { PageWrapperComponent } from './components/page-wrapper/page-wrapper.component';
@@ -58,11 +60,12 @@ import { PaginatorModule } from 'primeng/paginator';
 import { AccordionModule } from 'primeng/accordion';
 import { SliderModule } from 'primeng/slider';
 
-import {
-  DxDataGridModule,
-} from 'devextreme-angular/ui/data-grid';
+import { DxDataGridModule } from 'devextreme-angular/ui/data-grid';
 import { DxBulletModule, DxTemplateModule } from 'devextreme-angular';
 import { HttpClientModule } from '@angular/common/http';
+
+import { HttpClientModule } from '@angular/common/http';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 
 
 @NgModule({
@@ -74,6 +77,8 @@ import { HttpClientModule } from '@angular/common/http';
     PageWrapperComponent,
     LoginPageComponent,
     SignupPageComponent,
+    ProfileCardComponent,
+    ProfilePageComponent,
   ],
   imports: [
     AccordionModule,
@@ -83,6 +88,7 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     FontAwesomeModule,
     ReactiveFormsModule,
+    HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
@@ -107,32 +113,24 @@ import { HttpClientModule } from '@angular/common/http';
     CardModule,
     DividerModule,
     DataViewModule,
-    TableModule,
     PanelModule,
-    CardModule,
     FieldsetModule,
     SplitterModule,
     SpeedDialModule,
     SliderModule,
     ChartModule,
-    TableModule,
     InputIconModule,
     IconFieldModule,
-    DialogModule,
     InputNumberModule,
-    InputTextModule,
     FloatLabelModule,
-    CalendarModule,
     InputTextareaModule,
-    DropdownModule,
     ConfirmDialogModule,
-    ToastModule,
     DxDataGridModule,
     DxBulletModule,
     DxTemplateModule,
-    PanelModule,
     AvatarModule,
     AvatarGroupModule,
+    ImageModule,
   ],
   providers: [{ provide: FIREBASE_OPTIONS, useValue: environment.firebase }],
   bootstrap: [AppComponent],

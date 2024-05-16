@@ -46,13 +46,13 @@ export class NavbarComponent {
 
     if (this.user) {
       this.logOutItems = [{
-        label: this.user.displayName,
+        label: this.user.name,
         items: [
           {
             label: 'Logout',
             icon: 'pi pi-sign-out',
             command: () => {
-              this.auth.signOut();
+              this.auth.logout();
               this.redirectToLoginPage();
             },
           },
