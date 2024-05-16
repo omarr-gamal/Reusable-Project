@@ -7,7 +7,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 
 import { BehaviorSubject, Observable, from, of } from 'rxjs';
-import { switchMap, take, filter, map, catchError } from 'rxjs/operators';
+import { switchMap, take, filter, map, catchError, first } from 'rxjs/operators';
 import { User, defaultUser } from '../models/user.model';
 import { getAuth, signInWithPopup, GoogleAuthProvider, getAdditionalUserInfo } from '@angular/fire/auth';
 
@@ -69,12 +69,9 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  refreshUserState() {
-    this.user$.subscribe((user: any) => {
-      if (user) {
-        this.login(user.email!, user.password!).pipe(take(1)).subscribe();
-      }
-    });
+  refreshUserState(user: User) {
+    this.userSubject.next(user);
+    this.saveUserToLocalStorage(user);
   }
 
   async googleSignin(newUser: Boolean) {

@@ -19,10 +19,11 @@ export class UserDataService {
     return this.auth.user$.pipe(
       switchMap(user => {
         if (user) {
+          const updatedUser = { ...user, ...data };
           const userId = user.id;
           return this.http.put<any>(`${AuthService.backendUrl}/api/edituser/${userId}`, data).pipe(
             map(() => {
-              this.auth.refreshUserState();
+              this.auth.refreshUserState(updatedUser);
               return true;
             }),
             catchError(err => {
